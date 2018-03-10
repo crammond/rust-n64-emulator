@@ -1,6 +1,6 @@
 extern crate piston_window;
 
-use piston_window::{EventLoop, Events, EventSettings, PistonWindow, WindowSettings};
+use piston_window::{PistonWindow, WindowSettings};
 
 fn main() {
     let mut window: PistonWindow = WindowSettings::new("Unnamed N64 Emulator", [320, 240])
@@ -8,8 +8,7 @@ fn main() {
         .build()
         .unwrap();
 
-    let mut events = Events::new(EventSettings::new());
-    while let Some(e) = events.next(&mut window) {
+    while let Some(e) = window.next() {
         //TODO
     }
 }
