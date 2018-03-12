@@ -9,9 +9,7 @@ use std::io::BufReader;
 use std::io::prelude::*;
 
 fn main() {
-    let result = nfd::open_file_dialog(None, None).unwrap_or_else(|e| {
-        panic!(e);
-    });
+    let result = nfd::open_file_dialog(None, None).unwrap();
 
     let chosen_file = match result {
         Response::Okay(file_path) => file_path,
@@ -20,9 +18,10 @@ fn main() {
 
     let file = File::open(&chosen_file).unwrap();
     let mut buf_reader = BufReader::new(file);
-    let mut contents = String::new();
-    buf_reader.read_to_string(&mut contents).unwrap();
-    println!("Contents of file {}\n {}", chosen_file, contents);
+    let mut contents: Vec<u8> = Vec::new();
+    let _ = buf_reader.read_to_end(contents.as_mut());
+    // print the internal game name, info via https://www.romhacking.net/forum/index.php?topic=20415.0
+    println!("Internal name of file {}\n {}", chosen_file, String::from_utf8_lossy(&contents[32..52]));
 
     let mut window: PistonWindow = WindowSettings::new(format!("Unnamed N64 Emulator - {}", chosen_file), [320, 240])
         .exit_on_esc(true)
