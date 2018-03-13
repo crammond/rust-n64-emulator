@@ -31,7 +31,7 @@ fn main() {
     println!("Internal name: {}", String::from_utf8_lossy(&contents[0x20..0x33]));
     println!("Format: {}", char::from(contents[0x3B]));
     println!("GameID: {:?}", &contents[0x3C..0x3E]);
-    println!("Country Code: {:?}", &contents[0x3E]);
+    println!("Country Code: {}", char::from(contents[0x3E]));
     println!("Version: {:?}", &contents[0x3F]);
 
     let mut window: PistonWindow = WindowSettings::new(format!("Unnamed N64 Emulator - {}", chosen_file), [320, 240])
